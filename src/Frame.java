@@ -50,9 +50,9 @@ import java.awt.Toolkit;
   }
 
   public void refresh() {
-
-      this.setVisible(false);
-      this.setVisible(true);
+    this.invalidate();
+    this.validate();
+    this.repaint();
   }
 
   public void updateLabels(File pressed) {
