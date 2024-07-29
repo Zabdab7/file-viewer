@@ -15,21 +15,6 @@ public class Util {
     public static File[] getSuccessors(File f) {
         return Util.hasSuccessors(f) ? f.listFiles() : null;
     }
-
-    /*
-    public static String getExtension(File f) {
-        String extension = "", fileName = f.getName();
-
-        int i = fileName.lastIndexOf('.');
-        int p = Math.max(fileName.lastIndexOf('/'), fileName.lastIndexOf('\\'));
-
-        if (i > p) {
-            extension = fileName.substring(i+1);
-        }
-
-        return extension;
-    }
-    */
     
     public static ImageIcon getImageIcon(File f) {
         String fileName = "D:\\Coding Projects\\Java Projects\\file-viewer\\img\\";
