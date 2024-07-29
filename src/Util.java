@@ -16,6 +16,7 @@ public class Util {
         return Util.hasSuccessors(f) ? f.listFiles() : null;
     }
 
+    /*
     public static String getExtension(File f) {
         String extension = "", fileName = f.getName();
 
@@ -28,10 +29,10 @@ public class Util {
 
         return extension;
     }
+    */
     
     public static ImageIcon getImageIcon(File f) {
-        final String location = "C:\\Users\\nazma\\Desktop\\Zayan Coding Projects\\Basic File Viewer\\img\\";
-        String fileName = location;
+        String fileName = "D:\\Coding Projects\\Java Projects\\file-viewer\\img\\";
 
         if(Util.hasSuccessors(f)) {
             fileName += "folder.png";
