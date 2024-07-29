@@ -10,53 +10,68 @@ import java.awt.Toolkit;
 
 public class Frame extends JFrame implements ActionListener {
 
-  private ArrayList<Button> buttons;
-  private ArrayList<Label> labels;
-  private final File[] roots;
-  private int iterable;
+  private final ArrayList<Button> buttons = new ArrayList<Button>();;
+  private ArrayList<Label> labels = new ArrayList<Label>();;
+
 
   public Frame() {
 
-    this.roots = File.listRoots();
-
-    this.buttons = new ArrayList<Button>();
-    this.labels = new ArrayList<Label>();
-
-    this.iterable = 0;
-    for (File root : roots) buttons.add(new Button(root, iterable++));
+    fillRootButtons();
 
     for (Button button : buttons) {
       button.getButton().addActionListener(e -> {
-        this.iterable = 0;
+
+        int i = 0;
         for(File child : button.getChildren()) {
-          Label l = new Label(child, iterable);
+          Label l = new Label(child, i++);
           labels.add(l);
-          iterable++;
         }
+
         for(Label label : labels) {
           label.getButton().addActionListener(g -> {
             if(Util.hasSuccessors(label.getFile())) {
-              for(Label l : labels) this.remove(l.getButton());
-              labels.clear();
-              iterable = 0;
-              for(File successor : Util.getSuccessors(label.getFile())) {
-                labels.add(new Label(successor, iterable));
-                iterable++;
-              }
-            }  
+              fillLabels(label.getFile());
+            }
           });
           this.add(label.getButton());
         }
+
       });
-      // Display Labels
+
       for(Label label : labels) this.add(label.getButton());
       this.add(button.getButton());
     }
 
+
+    frameConfig();
+  }
+
+  public void fillRootButtons() {
+    int i = 0;
+    for (File root : File.listRoots()) this.buttons.add(new Button(root, i++));
+  }
+
+  public void frameConfig() {
     this.setSize(Frame.getScreenSize());
     this.setLayout(null);
     this.setVisible(true);
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+  }
+
+  public void fillLabels(File parent) {
+    this.clearLabels();
+    // add parent's successors to the list
+    int i = 0;
+    for(File successor : Util.getSuccessors(parent)) {
+      this.labels.add(new Label(successor, i++));
+    }
+  }
+
+  public void clearLabels() {
+    // clear labels from JFrame
+    for(Label l : labels) this.remove(l.getButton());
+    // empty labels list
+    labels.clear();
   }
 
   public static Dimension getScreenSize() {
