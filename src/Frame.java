@@ -2,31 +2,30 @@ import javax.swing.JFrame;
 
 import java.io.File;
 import java.util.ArrayList;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 
+public class Frame extends JFrame implements ActionListener {
 
-  public class Frame extends JFrame implements ActionListener {
-
-  private final ArrayList<Button> buttons = new ArrayList<Button>();;
-  private ArrayList<Label> labels = new ArrayList<Label>();;
-
+  private final ArrayList<Button> buttons = new ArrayList<Button>();
+  private ArrayList<Label> labels = new ArrayList<Label>();
 
   public Frame() {
 
     fillRootButtons();
 
     for(Button button : buttons) {
-      button.getButton().addActionListener(e -> {
+      button.getButton().addActionListener(rootButtonPressedEvent -> {
         updateLabels(button.getFile());
       });
       this.add(button.getButton());
     }
 
     for(Label label : labels) {
-      label.getButton().addActionListener(g -> {
+      label.getButton().addActionListener(labelPressedEvent -> {
         System.out.println(Util.getSuccessors(label.getFile()));
         updateLabels(label.getFile());
       });
@@ -35,6 +34,7 @@ import java.awt.Toolkit;
     addLabels();
 
     frameConfig();
+
   }
 
   public void fillRootButtons() {
@@ -49,20 +49,20 @@ import java.awt.Toolkit;
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
   }
 
+    public void updateLabels(File pressed) {
+      if(Util.hasSuccessors(pressed)) {
+        for(Label l : labels) this.remove(l.getButton()); // clear labels from JFrame
+        this.labels.clear(); // empty labels list
+        this.refresh();
+        this.fillLabels(pressed);
+        this.addLabels();
+      }
+    }
+
   public void refresh() {
     this.invalidate();
     this.validate();
     this.repaint();
-  }
-
-  public void updateLabels(File pressed) {
-    if(Util.hasSuccessors(pressed)) {
-      for(Label l : labels) this.remove(l.getButton()); // clear labels from JFrame
-      this.labels.clear(); // empty labels list
-      this.refresh();
-      this.fillLabels(pressed);
-      this.addLabels();
-    }
   }
 
   // add input's successors to labels

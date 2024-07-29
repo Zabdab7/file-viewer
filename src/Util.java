@@ -15,7 +15,6 @@ public class Util {
     public static File[] getSuccessors(File f) {
         return Util.hasSuccessors(f) ? f.listFiles() : null;
     }
-
     
     public static ImageIcon getImageIcon(File f) {
         String fileName = "D:\\Coding Projects\\Java Projects\\file-viewer\\img\\";
