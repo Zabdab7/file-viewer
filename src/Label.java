@@ -18,7 +18,6 @@ public class Label {
 
         this.button = new JButton();
         this.formatButton();
-
     }
 
     private void formatButton() {
