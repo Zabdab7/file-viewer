@@ -12,7 +12,7 @@ public class Frame extends JFrame implements ActionListener {
 
   private ArrayList<Button> buttons;
   private ArrayList<Label> labels;
-  private File[] roots;
+  private final File[] roots;
   private int iterable;
 
   public Frame() {
@@ -65,6 +65,6 @@ public class Frame extends JFrame implements ActionListener {
 
   // Has no use, but needed or else errors
   @Override
-  public void actionPerformed(ActionEvent e) {return;}
+  public void actionPerformed(ActionEvent e) {}
 
 }
