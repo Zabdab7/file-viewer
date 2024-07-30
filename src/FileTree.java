@@ -4,22 +4,34 @@ import java.io.File;
 public class FileTree {
 
     private FileNode rootNode;
+    private ArrayList<FileNode> nodeList;
 
     public FileTree(File rootFileName) {
         rootNode = new FileNode(rootFileName, 0);
+        nodeList = new ArrayList<FileNode>();
     }
 
-    public void traverse() {
+    public FileNode getRootNode() {
+        return this.rootNode;
+    }
+
+    public ArrayList<FileNode> list() {
         traverse(rootNode);
+        return nodeList;
     }
 
-    // pre-order tree traversal
+    // tree traversal
     private void traverse(FileNode node) {
-        System.out.println("name: " + node.getFile().getName() + ", depth: " + node.getDepth());
-        if(node.hasChildren()) {
-            for(FileNode childNode : node.getChildren()) {
-                traverse(childNode);
+
+        // Stuff To do
+        System.out.println("name: " + node.getFile().getAbsolutePath() + ", depth: " + node.getDepth());
+        nodeList.add(node);
+
+        if(node.isOpen()) {
+            for(FileNode childNode : node.listFiles()) {
+                this.traverse(childNode);
             }
         }
     }
+
 }
