@@ -10,36 +10,19 @@ import java.awt.Toolkit;
 
 public class Frame extends JFrame implements ActionListener {
 
-  private final ArrayList<Button> buttons = new ArrayList<Button>();
-  private ArrayList<Label> labels = new ArrayList<Label>();
+  private ArrayList<FileTree> trees;
 
   public Frame() {
 
-    fillRootButtons();
-
-    for(Button button : buttons) {
-      button.getButton().addActionListener(rootButtonPressedEvent -> {
-        updateLabels(button.getFile());
-      });
-      this.add(button.getButton());
-    }
-
-    for(Label label : labels) {
-      label.getButton().addActionListener(labelPressedEvent -> {
-        System.out.println(Util.getSuccessors(label.getFile()));
-        updateLabels(label.getFile());
-      });
-    }
-
-    addLabels();
-
+    createTrees();
     frameConfig();
 
   }
 
-  public void fillRootButtons() {
-    int i = 0;
-    for (File root : File.listRoots()) this.buttons.add(new Button(root, i++));
+  private void createTrees() {
+    for(File root : File.listRoots()) {
+      trees.add(new FileTree(root));
+    }
   }
 
   public void frameConfig() {
@@ -49,33 +32,10 @@ public class Frame extends JFrame implements ActionListener {
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
   }
 
-    public void updateLabels(File pressed) {
-      if(Util.hasSuccessors(pressed)) {
-        for(Label l : labels) this.remove(l.getButton()); // clear labels from JFrame
-        this.labels.clear(); // empty labels list
-        this.refresh();
-        this.fillLabels(pressed);
-        this.addLabels();
-      }
-    }
-
   public void refresh() {
     this.invalidate();
     this.validate();
     this.repaint();
-  }
-
-  // add input's successors to labels
-  public void fillLabels(File parent) {
-    int i = 0;
-    for (File successor : Util.getSuccessors(parent)) {
-      this.labels.add(new Label(successor, i++));
-    }
-  }
-
-  // Loop through labels, adding each to the JFrame
-  public void addLabels() {
-    for(Label label : labels) this.add(label.getButton());
   }
 
   public static Dimension getScreenSize() {

@@ -51,13 +51,4 @@ public class Label {
     public JButton getButton() {
         return this.button;
     }
-
-    public void enter() {
-        // TODO = change label background color to light blue  while cursor is hovering
-    }
-
-    public void exit() {
-        // TODO = change label color back to transparent when cursor is not hovering
-    }
-
 }
