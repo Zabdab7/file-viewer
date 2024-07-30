@@ -15,12 +15,23 @@ public class Frame extends JFrame implements ActionListener {
   public Frame() {
 
     createTrees();
-    frameConfig();
+
+    FileTree first = trees.get(0);
+
+    first.getRootNode().open(); // Open C:/
+
+    first.getRootNode().listFiles()[18].listFiles()[2].open(); // Open Program Files
+
+    first.list();
+
+    // frameConfig();
 
   }
 
   private void createTrees() {
+    trees = new ArrayList<FileTree>();
     for(File root : File.listRoots()) {
+      System.out.println(root);
       trees.add(new FileTree(root));
     }
   }
