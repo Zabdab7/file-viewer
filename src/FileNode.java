@@ -1,16 +1,16 @@
 import java.io.File;
 import java.util.ArrayList;
 
-    public class FileNode {
+public class FileNode {
 
         private File file;
         private int depth;
-        private ArrayList<FileNode> children;
+        private boolean isOpen;
 
         public FileNode(File file, int depth) {
             this.file = file;
             this.depth = depth;
-            children = new ArrayList<FileNode>();
+            this.isOpen = false;
         }
 
         public FileNode[] listFiles() {
@@ -21,12 +21,12 @@ import java.util.ArrayList;
             return nodes.toArray(nodes.toArray(new FileNode[0]));
         }
 
-        public boolean hasChildren() {
-            return this.getChildren().isEmpty();
+        public void open() {
+            this.isOpen = true;
         }
 
-        public ArrayList<FileNode> getChildren() {
-            return this.children;
+        public boolean isOpen() {
+            return this.isOpen;
         }
 
         public File getFile() {
